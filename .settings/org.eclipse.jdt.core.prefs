@@ -4,4 +4,8 @@ org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
 org.eclipse.jdt.core.compiler.compliance=1.8
 org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
 org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+<<<<<<< HEAD
+=======
+org.eclipse.jdt.core.compiler.release=disabled
+>>>>>>> 6d19f9eb916dc281e983cce6b4aa80448e2de113
 org.eclipse.jdt.core.compiler.source=1.8
