@@ -22,9 +22,9 @@ public class Game extends Application {
 		// CENTRE X, CENTRE Y, RADIUS X, RADIUS Y
 		ball = new Ellipse(200, 100, 10, 10);
 		ball.setFill(Color.WHITE);
-		player1 = new Rectangle(50, 200, 10, 40);
+		player1 = new Rectangle(20, 200, 10, 40);
 		player1.setFill(Color.BLUE);
-		player2 = new Rectangle(350, 200, 10, 40);
+		player2 = new Rectangle(370, 200, 10, 40);
 		player2.setFill(Color.BLUE);
 
 		root.getChildren().add(ball);
