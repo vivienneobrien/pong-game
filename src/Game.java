@@ -41,18 +41,24 @@ public class Game extends Application {
 	}
 
 	public void startGame() {
+
 		scene.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.UP) {
-				// change y position of player 1
-				player1.setY(player1.getY() - 20);
-				// System.out.println("Up key was pressed");
+				if (PlayerConstraints.checkLowerBound(player1.getY()) == true) {
+					// change y position of player 1
+					player1.setY(player1.getY() - PlayerConstraints.speed);
+					// System.out.println("Up key was pressed");
+				}
 			} else if (e.getCode() == KeyCode.DOWN) {
-				player1.setY(player1.getY() + 20);
-				// System.out.println("Down key was pressed");
+				if (PlayerConstraints.checkUpperBound(player1.getY()) == true) {
+					player1.setY(player1.getY() + PlayerConstraints.speed);
+					// System.out.println("Down key was pressed" + player1.getY());
+				}
 			} else {
 				// System.out.println("Not the right key");
 			}
 		});
+
 	}
 
 	@Override
