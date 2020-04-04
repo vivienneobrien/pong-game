@@ -25,9 +25,9 @@ public class Game extends Application {
 		// CENTRE X, CENTRE Y, RADIUS X, RADIUS Y
 		ball = new Ellipse(200, 100, 10, 10);
 		ball.setFill(Color.WHITE);
-		player1 = new Rectangle(20, 200, 10, 40);
+		player1 = new Rectangle(20, 200, PlayerParameters.radiusX, PlayerParameters.radiusY);
 		player1.setFill(Color.BLUE);
-		player2 = new Rectangle(370, 200, 10, 40);
+		player2 = new Rectangle(370, 200, PlayerParameters.radiusX, PlayerParameters.radiusY);
 		player2.setFill(Color.BLUE);
 
 		root.getChildren().add(ball);
@@ -46,12 +46,12 @@ public class Game extends Application {
 			if (e.getCode() == KeyCode.UP) {
 				if (PlayerConstraints.checkLowerBound(player1.getY()) == true) {
 					// change y position of player 1
-					player1.setY(player1.getY() - PlayerConstraints.speed);
+					player1.setY(player1.getY() - PlayerParameters.speed);
 					// System.out.println("Up key was pressed");
 				}
 			} else if (e.getCode() == KeyCode.DOWN) {
 				if (PlayerConstraints.checkUpperBound(player1.getY()) == true) {
-					player1.setY(player1.getY() + PlayerConstraints.speed);
+					player1.setY(player1.getY() + PlayerParameters.speed);
 					// System.out.println("Down key was pressed" + player1.getY());
 				}
 			} else {

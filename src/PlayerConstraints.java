@@ -1,8 +1,7 @@
 
 public class PlayerConstraints {
 
-	public final static int speed = 20;
-	public final static int upperBound = 380 - speed;
+	public final static int upperBound = 400 - PlayerParameters.radiusY;
 	public final static int lowerBound = 0;
 
 	public static boolean checkLowerBound(double y) {
