@@ -1,6 +1,8 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -11,6 +13,7 @@ public class Game extends Application {
 	public Ellipse ball;
 	public Rectangle player1;
 	public Rectangle player2;
+	public Scene scene;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -30,16 +33,32 @@ public class Game extends Application {
 		root.getChildren().add(ball);
 		root.getChildren().add(player1);
 		root.getChildren().add(player2);
-		Scene scene = new Scene(root, 400, 400, Color.BLACK);
+		scene = new Scene(root, 400, 400, Color.BLACK);
 		primaryStage.setTitle("Pong-Game");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
 	}
 
+	public void startGame() {
+		scene.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.UP) {
+				// change y position of player 1
+				player1.setY(player1.getY() - 20);
+				// System.out.println("Up key was pressed");
+			} else if (e.getCode() == KeyCode.DOWN) {
+				player1.setY(player1.getY() + 20);
+				// System.out.println("Down key was pressed");
+			} else {
+				// System.out.println("Not the right key");
+			}
+		});
+	}
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		setUp(primaryStage);
+		startGame();
 
 	}
 }
