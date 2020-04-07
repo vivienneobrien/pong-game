@@ -1,3 +1,8 @@
+/**
+ * Player Parameters class
+ * @author sebastianstanici & vivienneobrien
+ * @version 03/04/20
+ */
 
 public class PlayerParameters {
 

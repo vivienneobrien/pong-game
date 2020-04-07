@@ -1,6 +1,11 @@
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-
+/**
+ * Player Constraints class
+ * @author sebastianstanici & vivienneobrien
+ * @version 03/04/20
+ *
+ */
 public class PlayerConstraints {
 
 	public final static int upperBound = 400 - PlayerParameters.radiusY;

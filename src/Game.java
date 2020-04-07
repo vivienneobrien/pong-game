@@ -1,5 +1,4 @@
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -13,6 +12,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Game class is a class that creates a pong game.
+ * 
+ * @authors sebastianstanici & vivienneobrien
+ * @version begin date: 03/04/20 
+ */
 public class Game extends Application {
 
 	public Circle ball;
@@ -26,7 +31,8 @@ public class Game extends Application {
 	}
 
 	/**
-	 * Sets the game up using two players and a ball
+	 * setUp method sets the game up using two players and a ball Adds all contents
+	 * to the stage
 	 * 
 	 * @param primaryStage
 	 */
@@ -40,13 +46,14 @@ public class Game extends Application {
 		player2.setFill(Color.BLUE);
 		root.getChildren().addAll(ball, player1, player2);
 		scene = new Scene(root, 400, 400, Color.BLACK);
-		primaryStage.setTitle("Pong-Game");
 		primaryStage.setScene(scene);
+		primaryStage.setTitle("Pong-Game");
 		primaryStage.show();
 	}
 
 	/**
-	 * Start method is used set up the game for when the user opens the window
+	 * Start method is used set up the game for when the user opens the window.
+	 * Contains actions that allow player 1, player 2 and ball to move.
 	 */
 	public void startGame() {
 		/**
@@ -71,26 +78,30 @@ public class Game extends Application {
 				// System.out.println("Not the right key");
 			}
 		});
-
 		/**
-		 * Circle movement Timeline = animation
+		 * Timeline sets up the animation
 		 */
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
 
 			/**
 			 * Distance
 			 */
-			double dx = 4; // Step on x or velocity fast on x axis speed
-			double dy = 2; // Step on y faster on y axis
+			double dx = 4; // Makes the ball is fast on x axis
+			double dy = 2; // Mkaes the ball fast on y axis
 
 			@Override
 			public void handle(ActionEvent t) {
-				// move the ball
+				/**
+				 * adds the speed of the ball. Layout: the way in which the parts of something
+				 * are arranged or laid out -> on x and y axis
+				 */
 				ball.setLayoutX(ball.getLayoutX() + dx);
 				ball.setLayoutY(ball.getLayoutY() + dy);
 
-				// keeps in bounds
-				// If the ball reaches the left or right border make the step negative
+				/**
+				 * Keeps in bounds If the ball reaches the left or right border make the step
+				 * negative
+				 */
 				if (ball.getLayoutX() <= (WindowConstraints.minimumX + ball.getRadius())
 						|| ball.getLayoutX() >= (WindowConstraints.maximumX - ball.getRadius())
 						|| PlayerConstraints.checkBallTouchesPlayer(ball, player1, player2)) {
@@ -99,7 +110,9 @@ public class Game extends Application {
 
 				}
 
-				// If the ball reaches the bottom or top border make the step negative
+				/**
+				 * If the ball reaches the bottom or top border make the step negative
+				 */
 				if ((ball.getLayoutY() >= (WindowConstraints.maximumY - ball.getRadius()))
 						|| (ball.getLayoutY() <= (WindowConstraints.minimumY + ball.getRadius()))) {
 
@@ -108,6 +121,9 @@ public class Game extends Application {
 				}
 			}
 		}));
+		/**
+		 * How many times the game will reset if you loose. play() llows the timeline to begin
+		 */
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
 

@@ -1,3 +1,8 @@
+/**
+ * Window Constraints class.
+ * @author sebastianstanici & vivienneobrien
+ * @version 07/04/20
+ */
 
 public class WindowConstraints {
 
