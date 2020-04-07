@@ -81,7 +81,7 @@ public class Game extends Application {
 			/**
 			 * Distance
 			 */
-			double dx = 4; // Step on x or velocity fast on x axis
+			double dx = 4; // Step on x or velocity fast on x axis speed
 			double dy = 2; // Step on y faster on y axis
 
 			@Override
@@ -93,7 +93,8 @@ public class Game extends Application {
 				// keeps in bounds
 				// If the ball reaches the left or right border make the step negative
 				if (ball.getLayoutX() <= (WindowConstraints.minimumX + ball.getRadius())
-						|| ball.getLayoutX() >= (WindowConstraints.maximumX - ball.getRadius())) {
+						|| ball.getLayoutX() >= (WindowConstraints.maximumX - ball.getRadius()) || 
+						PlayerConstraints.checkBallTouchesPlayer(ball, player1, player2))  {
 
 					dx = -dx;
 

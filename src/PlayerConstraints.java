@@ -1,3 +1,5 @@
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 public class PlayerConstraints {
 
@@ -18,6 +20,20 @@ public class PlayerConstraints {
 		} else {
 			return false;
 		}
+	}
+
+	public static boolean checkBallTouchesPlayer(Circle ball, Rectangle player1, Rectangle player2) {
+
+		// if it touches the player
+		// in range of y of player
+
+		// player.getY < ball.getY < player.getY + radiusY + check X
+		if (player1.getY() < ball.getLayoutY() && ball.getLayoutY() < player1.getY() + PlayerParameters.radiusY) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 }
