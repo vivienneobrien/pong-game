@@ -28,7 +28,16 @@ public class PlayerConstraints {
 		// in range of y of player
 
 		// player.getY < ball.getY < player.getY + radiusY + check X
-		if (player1.getY() < ball.getLayoutY() && ball.getLayoutY() < player1.getY() + PlayerParameters.radiusY) {
+		// layout is centre of ball
+		if (player1.getX() < ball.getLayoutX() + ball.getRadius()
+				&& ball.getLayoutX() - ball.getRadius() < player1.getX() + PlayerParameters.radiusX
+				&& player1.getY() < ball.getLayoutY() + ball.getRadius()
+				&& ball.getLayoutY() - ball.getRadius() < player1.getY() + PlayerParameters.radiusY) {
+			return true;
+		} else if (player2.getX() < ball.getLayoutX() + ball.getRadius()
+				&& ball.getLayoutX() - ball.getRadius() < player2.getX() + PlayerParameters.radiusX
+				&& player2.getY() < ball.getLayoutY() + ball.getRadius()
+				&& ball.getLayoutY() - ball.getRadius() < player2.getY() + PlayerParameters.radiusY) {
 			return true;
 		} else {
 			return false;
