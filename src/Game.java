@@ -29,7 +29,7 @@ public class Game extends Application {
 		player1.setFill(Color.BLUE);
 		player2 = new Rectangle(370, 200, PlayerParameters.radiusX, PlayerParameters.radiusY);
 		player2.setFill(Color.BLUE);
-
+		
 		root.getChildren().add(ball);
 		root.getChildren().add(player1);
 		root.getChildren().add(player2);
