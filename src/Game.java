@@ -43,12 +43,18 @@ public class Game extends Application {
 	public void startGame() {
 
 		scene.setOnKeyPressed(e -> {
+			/**
+			 * key up
+			 */
 			if (e.getCode() == KeyCode.UP) {
 				if (PlayerConstraints.checkLowerBound(player1.getY()) == true) {
 					// change y position of player 1
 					player1.setY(player1.getY() - PlayerParameters.speed);
 					// System.out.println("Up key was pressed");
 				}
+				/**
+				 * key down
+				 */
 			} else if (e.getCode() == KeyCode.DOWN) {
 				if (PlayerConstraints.checkUpperBound(player1.getY()) == true) {
 					player1.setY(player1.getY() + PlayerParameters.speed);
