@@ -49,7 +49,7 @@ public class Game extends Application {
 	}
 
 	public void startGame() {
-		
+
 		scene.setOnKeyPressed(e -> {
 			/**
 			 * key up
@@ -72,45 +72,44 @@ public class Game extends Application {
 				// System.out.println("Not the right key");
 			}
 		});
-		
+
 		/**
-		 * Circle movement
+		 * Circle movement Timeline = animation
 		 */
-		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), 
-                new EventHandler<ActionEvent>() {
+		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
 
-        	double dx = 7; //Step on x or velocity
-        	double dy = 3; //Step on y
-        	
-            @Override
-            public void handle(ActionEvent t) {
-            	//move the ball
-            	ball.setLayoutX(ball.getLayoutX() + dx);
-            	ball.setLayoutY(ball.getLayoutY() + dy);
+			/**
+			 * Distance
+			 */
+			double dx = 4; // Step on x or velocity fast on x axis
+			double dy = 2; // Step on y faster on y axis
 
-                Bounds bounds = root.getBoundsInLocal();
-                
-                //If the ball reaches the left or right border make the step negative
-                if(ball.getLayoutX() <= (bounds.getMinX() + ball.getRadius()) || 
-                        ball.getLayoutX() >= (bounds.getMaxX() - ball.getRadius()) ){
+			@Override
+			public void handle(ActionEvent t) {
+				// move the ball
+				ball.setLayoutX(ball.getLayoutX() + dx);
+				ball.setLayoutY(ball.getLayoutY() + dy);
 
-                	dx = -dx;
+				// keeps in bounds
+				// If the ball reaches the left or right border make the step negative
+				if (ball.getLayoutX() <= (WindowConstraints.minimumX + ball.getRadius())
+						|| ball.getLayoutX() >= (WindowConstraints.maximumX - ball.getRadius())) {
 
-                }
+					dx = -dx;
 
-                //If the ball reaches the bottom or top border make the step negative
-                if((ball.getLayoutY() >= (bounds.getMaxY() - ball.getRadius())) || 
-                        (ball.getLayoutY() <= (bounds.getMinY() + ball.getRadius()))){
+				}
 
-                	dy = -dy;
+				// If the ball reaches the bottom or top border make the step negative
+				if ((ball.getLayoutY() >= (WindowConstraints.maximumY - ball.getRadius()))
+						|| (ball.getLayoutY() <= (WindowConstraints.minimumY + ball.getRadius()))) {
 
-                }
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+					dy = -dy;
 
-	
+				}
+			}
+		}));
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.play();
 
 	}
 
