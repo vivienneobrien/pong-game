@@ -40,9 +40,11 @@ public class Game extends Application {
 		root = new Group();
 		ball = new Circle(10, Color.WHITE);
 		ball.relocate(200, 200);
-		player1 = new Rectangle(20, 200, PlayerParameters.radiusX, PlayerParameters.radiusY);
+		player1 = new Rectangle(PlayerParameters.player1X, PlayerParameters.playerStartingY, 
+				PlayerParameters.radiusX, PlayerParameters.radiusY);
 		player1.setFill(Color.BLUE);
-		player2 = new Rectangle(370, 200, PlayerParameters.radiusX, PlayerParameters.radiusY);
+		player2 = new Rectangle(PlayerParameters.player2X, PlayerParameters.playerStartingY, 
+				PlayerParameters.radiusX, PlayerParameters.radiusY);
 		player2.setFill(Color.BLUE);
 		root.getChildren().addAll(ball, player1, player2);
 		scene = new Scene(root, 400, 400, Color.BLACK);
