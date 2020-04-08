@@ -3,12 +3,16 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -16,7 +20,7 @@ import javafx.util.Duration;
  * Game class is a class that creates a pong game.
  * 
  * @authors sebastianstanici & vivienneobrien
- * @version begin date: 03/04/20 
+ * @version begin date: 03/04/20
  */
 public class Game extends Application {
 
@@ -25,6 +29,9 @@ public class Game extends Application {
 	public Rectangle player2;
 	public Scene scene;
 	public Group root;
+	public Text stopPlayer1;
+	public Text stopPlayer2;
+
 
 	public static void main(String[] args) {
 		launch(args);
@@ -40,13 +47,21 @@ public class Game extends Application {
 		root = new Group();
 		ball = new Circle(10, Color.WHITE);
 		ball.relocate(200, 200);
-		player1 = new Rectangle(Player.player1X, Player.playerStartingY, 
-				Player.radiusX, Player.radiusY);
+		player1 = new Rectangle(Player.player1X, Player.playerStartingY, Player.radiusX, Player.radiusY);
 		player1.setFill(Color.BLUE);
-		player2 = new Rectangle(Player.player2X, Player.playerStartingY, 
-				Player.radiusX, Player.radiusY);
+		player2 = new Rectangle(Player.player2X, Player.playerStartingY, Player.radiusX, Player.radiusY);
 		player2.setFill(Color.BLUE);
-		root.getChildren().addAll(ball, player1, player2);
+		
+		stopPlayer1 = new Text(Integer.toString(Player.score1));
+		stopPlayer1.setFill(Color.WHITE);
+		stopPlayer1.relocate(130, 20);
+		stopPlayer1.setStyle("-fx-text-fill: white; -fx-font-size: 3em");
+		stopPlayer2 = new Text(Integer.toString(Player.score2));
+		stopPlayer2.setFill(Color.WHITE);
+		stopPlayer2.relocate(240, 20);
+
+		stopPlayer2.setStyle("-fx-text-fill: white; -fx-font-size: 3em");
+		root.getChildren().addAll(ball, player1, player2, stopPlayer1, stopPlayer2);
 		scene = new Scene(root, 400, 400, Color.BLACK);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Pong-Game");
@@ -117,42 +132,47 @@ public class Game extends Application {
 						|| (ball.getLayoutY() <= (WindowConstraints.minimumY + ball.getRadius()))) {
 					dy = -dy;
 				}
-				
+
 				/*
 				 * If ball is past player1's goal
-				 * */
-				if( ball.getLayoutX() < Player.player1X ) {
+				 */
+				if (ball.getLayoutX() < Player.player1X) {
 					// reset ball to the middle of the pitch
 					ball.setLayoutX(Ball.startingPositionX);
 					ball.setLayoutY(Ball.startingPositionY);
-					// change direction of ball 
-					dx = -dx; 
+					// change direction of ball
+					dx = -dx;
 
 					// TODO: increase score for player2
-					
+					Player.score2++;
+					stopPlayer2.setText(Integer.toString(Player.score2));
+
 					// TODO: Wait 1 sec
-					
+
 				}
-				
+
 				/*
 				 * If ball is past player2's goal
-				 * */
-				if( Player.player2X + Player.radiusX < ball.getLayoutX() ) {
+				 */
+				if (Player.player2X + Player.radiusX < ball.getLayoutX()) {
 					// reset ball to the middle of the pitch
 					ball.setLayoutX(Ball.startingPositionX);
 					ball.setLayoutY(Ball.startingPositionY);
-					// change direction of ball 
-					dx = -dx; 
+					// change direction of ball
+					dx = -dx;
 
 					// TODO: increase score for player1
+					Player.score1++;
+					stopPlayer1.setText(Integer.toString(Player.score1));
 					
 					// TODO: Wait 1 sec
-					
+
 				}
 			}
 		}));
 		/**
-		 * How many times the game will reset if you loose. play() llows the timeline to begin
+		 * How many times the game will reset if you loose. play() llows the timeline to
+		 * begin
 		 */
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();

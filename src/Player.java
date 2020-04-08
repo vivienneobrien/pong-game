@@ -13,4 +13,7 @@ public class Player {
 	public final static int player1X = 20;
 	public final static int player2X = 370;
 	public final static int playerStartingY = 200;
+	
+	public static int score1 = 0;
+	public static int score2 = 0;
 }
