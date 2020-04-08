@@ -4,7 +4,7 @@
  * @version 03/04/20
  */
 
-public class PlayerParameters {
+public class Player {
 
 	public final static int speed = 20;
 	public final static int radiusX = 10;

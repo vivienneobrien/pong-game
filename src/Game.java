@@ -40,11 +40,11 @@ public class Game extends Application {
 		root = new Group();
 		ball = new Circle(10, Color.WHITE);
 		ball.relocate(200, 200);
-		player1 = new Rectangle(PlayerParameters.player1X, PlayerParameters.playerStartingY, 
-				PlayerParameters.radiusX, PlayerParameters.radiusY);
+		player1 = new Rectangle(Player.player1X, Player.playerStartingY, 
+				Player.radiusX, Player.radiusY);
 		player1.setFill(Color.BLUE);
-		player2 = new Rectangle(PlayerParameters.player2X, PlayerParameters.playerStartingY, 
-				PlayerParameters.radiusX, PlayerParameters.radiusY);
+		player2 = new Rectangle(Player.player2X, Player.playerStartingY, 
+				Player.radiusX, Player.radiusY);
 		player2.setFill(Color.BLUE);
 		root.getChildren().addAll(ball, player1, player2);
 		scene = new Scene(root, 400, 400, Color.BLACK);
@@ -65,7 +65,7 @@ public class Game extends Application {
 			if (e.getCode() == KeyCode.UP) {
 				if (PlayerConstraints.checkLowerBound(player1.getY()) == true) {
 					// change y position of player 1
-					player1.setY(player1.getY() - PlayerParameters.speed);
+					player1.setY(player1.getY() - Player.speed);
 					// System.out.println("Up key was pressed");
 				}
 				/**
@@ -73,7 +73,7 @@ public class Game extends Application {
 				 */
 			} else if (e.getCode() == KeyCode.DOWN) {
 				if (PlayerConstraints.checkUpperBound(player1.getY()) == true) {
-					player1.setY(player1.getY() + PlayerParameters.speed);
+					player1.setY(player1.getY() + Player.speed);
 					// System.out.println("Down key was pressed" + player1.getY());
 				}
 			} else {
@@ -107,9 +107,7 @@ public class Game extends Application {
 				if (ball.getLayoutX() <= (WindowConstraints.minimumX + ball.getRadius())
 						|| ball.getLayoutX() >= (WindowConstraints.maximumX - ball.getRadius())
 						|| PlayerConstraints.checkBallTouchesPlayer(ball, player1, player2)) {
-
 					dx = -dx;
-
 				}
 
 				/**
@@ -117,9 +115,39 @@ public class Game extends Application {
 				 */
 				if ((ball.getLayoutY() >= (WindowConstraints.maximumY - ball.getRadius()))
 						|| (ball.getLayoutY() <= (WindowConstraints.minimumY + ball.getRadius()))) {
-
 					dy = -dy;
+				}
+				
+				/*
+				 * If ball is past player1's goal
+				 * */
+				if( ball.getLayoutX() < Player.player1X ) {
+					// reset ball to the middle of the pitch
+					ball.setLayoutX(Ball.startingPositionX);
+					ball.setLayoutY(Ball.startingPositionY);
+					// change direction of ball 
+					dx = -dx; 
 
+					// TODO: increase score for player2
+					
+					// TODO: Wait 1 sec
+					
+				}
+				
+				/*
+				 * If ball is past player2's goal
+				 * */
+				if( Player.player2X + Player.radiusX < ball.getLayoutX() ) {
+					// reset ball to the middle of the pitch
+					ball.setLayoutX(Ball.startingPositionX);
+					ball.setLayoutY(Ball.startingPositionY);
+					// change direction of ball 
+					dx = -dx; 
+
+					// TODO: increase score for player1
+					
+					// TODO: Wait 1 sec
+					
 				}
 			}
 		}));
