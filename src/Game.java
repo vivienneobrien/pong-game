@@ -172,7 +172,7 @@ public class Game extends Application {
 				
 				/*
 				 * Check where ball is going for player 2
-				 * */
+				 * */ 
 				if(dx > 0 && ball.getLayoutX() >= 200 && ball.getLayoutX() <= (200 + 5*dx)) {
 					// Vector function to check where ball is going WITHOUT checking boundaries touched
 					int y2 = (int) ((370-ball.getLayoutX())/dx*dy + ball.getLayoutY());
