@@ -168,6 +168,21 @@ public class Game extends Application {
 					// TODO: Wait 1 sec
 
 				}
+				
+				/*
+				 * Check where ball is going for player 2
+				 * */
+				if(dx > 0 && ball.getLayoutX() >= 200 && ball.getLayoutX() <= (200 + 5*dx)) {
+					// Vector function to check where ball is going WITHOUT checking boundaries touched
+					int y2 = (int) ((370-ball.getLayoutX())/dx*dy + ball.getLayoutY());
+					// If direction is upwards 
+					if(y2 < 0) y2 = -y2;
+					// If odd amount of boundaries touched
+					if(y2/400%2 == 1) y2 = 400-y2%400;
+					
+					// Teleport player 2 to location 
+					player2.setY(y2-Player.radiusY/2);
+				}
 			}
 		}));
 		/**
