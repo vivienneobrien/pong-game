@@ -179,9 +179,13 @@ public class Game extends Application {
 					if(y2 < 0) y2 = -y2;
 					// If odd amount of boundaries touched
 					if(y2/400%2 == 1) y2 = 400-y2%400;
-					
+			
 					// Teleport player 2 to location 
-					player2.setY(y2-Player.radiusY/2);
+					y2 = y2-Player.radiusY/2;
+					
+					for(double i= player2.getY(); i< y2; i++) {
+						player2.setY(i);
+					}
 				}
 			}
 		}));
