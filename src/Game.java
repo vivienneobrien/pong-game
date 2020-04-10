@@ -31,6 +31,7 @@ public class Game extends Application {
 	public Group root;
 	public Text stopPlayer1;
 	public Text stopPlayer2;
+	private int previousY2 = -1;
 
 
 	public static void main(String[] args) {
@@ -180,11 +181,17 @@ public class Game extends Application {
 					// If odd amount of boundaries touched
 					if(y2/400%2 == 1) y2 = 400-y2%400;
 			
-					// Teleport player 2 to location 
+					// Move player 2 to location 
 					y2 = y2-Player.radiusY/2;
 					
-					for(double i= player2.getY(); i< y2; i++) {
-						player2.setY(i);
+					// Check if corresponding y2s
+					if(previousY2 != y2) {					
+						// Save y2
+						previousY2 = y2; 
+						
+						// Create thread to move player 2
+						player2.setY(y2);
+//						(new Player2MovementThread(y2, player2)).start();
 					}
 				}
 			}
