@@ -42,6 +42,7 @@ public class Game extends Application {
 	public int gameType = 0;
 	private String ipToConnectTo;
 	public Socket socket; 
+	public ConnectionThread conn; 
 
 	public static void main(String[] args) {
 		launch(args);
@@ -109,6 +110,8 @@ public class Game extends Application {
 				try {
 					ServerSocket ss = new ServerSocket(10101);
 					socket = ss.accept();
+					conn = new ConnectionThread(socket);
+					conn.start();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -118,6 +121,8 @@ public class Game extends Application {
 			// Join server 
 				try {
 					socket = new Socket(ipToConnectTo, 10101);
+					conn = new ConnectionThread(socket);
+					conn.start();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -143,7 +148,7 @@ public class Game extends Application {
 	 * Start method is used set up the game for when the user opens the window.
 	 * Contains actions that allow player 1, player 2 and ball to move.
 	 */
-	public void startGame() {
+	public void startGame() {	
 		/**
 		 * Key up
 		 */
@@ -153,6 +158,11 @@ public class Game extends Application {
 					// change y position of player 1
 					player1.setY(player1.getY() - Player.speed);
 					// System.out.println("Up key was pressed");
+					
+					// Send new position to client if multiplayer
+					if(gameType == 2) {
+						conn.sendInt((int) player1.getY()); 
+					}
 				}
 				/**
 				 * Key down
@@ -161,6 +171,11 @@ public class Game extends Application {
 				if (PlayerConstraints.checkUpperBound(player1.getY()) == true) {
 					player1.setY(player1.getY() + Player.speed);
 					// System.out.println("Down key was pressed" + player1.getY());
+					
+					// Send new position to client if multiplayer
+					if(gameType == 2) {
+						conn.sendInt((int) player1.getY());  
+					}
 				}
 			} else {
 				// System.out.println("Not the right key");
@@ -275,7 +290,8 @@ public class Game extends Application {
 						}
 					}
 				} else if (gameType == 2) {
-					// TODO: multiplayer & sockets
+					// Change height of player 2 to what we have on Connection thread
+					player2.setY(conn.player2height);
 				}
 			}
 		}));
