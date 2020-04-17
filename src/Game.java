@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -35,7 +36,6 @@ public class Game extends Application {
 	public Text stopPlayer2;
 	private int previousY2 = -1;
 
-
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -54,7 +54,7 @@ public class Game extends Application {
 		player1.setFill(Color.BLUE);
 		player2 = new Rectangle(Player.player2X, Player.playerStartingY, Player.radiusX, Player.radiusY);
 		player2.setFill(Color.BLUE);
-		
+
 		stopPlayer1 = new Text(Integer.toString(Player.score1));
 		stopPlayer1.setFill(Color.WHITE);
 		stopPlayer1.relocate(130, 20);
@@ -69,6 +69,34 @@ public class Game extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Pong-Game");
 		primaryStage.show();
+	}
+
+	public void displayMenue(Stage primaryStage) {
+		root = new Group();
+		Button multiPlayer = new Button("multiplayer");
+		Button singlePlayer = new Button("singleplayer");
+		singlePlayer.setLayoutX(200);
+		singlePlayer.setLayoutY(200);
+		multiPlayer.setLayoutX(100);
+		multiPlayer.setLayoutY(200);
+
+		singlePlayer.setOnAction(value -> {
+			System.out.println("Single Player");
+			 setUp(primaryStage);
+			 startGame();
+		});
+		
+		multiPlayer.setOnAction(value -> {
+			System.out.println("Multi-Player");
+			 setUp(primaryStage);
+			 startGame();
+		});
+
+		root.getChildren().addAll(multiPlayer, singlePlayer);
+		scene = new Scene(root, 400, 400);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+
 	}
 
 	/**
@@ -167,36 +195,39 @@ public class Game extends Application {
 					// TODO: increase score for player1
 					Player.score1++;
 					stopPlayer1.setText(Integer.toString(Player.score1));
-					
+
 					// TODO: Wait 1 sec
 
 				}
-				
+
 				/*
 				 * Check where ball is going for player 2
-				 * */ 
-				if(dx > 0 && ball.getLayoutX() >= 200 && ball.getLayoutX() <= (200 + 5*dx)) {
-					// Vector function to check where ball is going WITHOUT checking boundaries touched
-					int y2 = (int) ((370-ball.getLayoutX())/dx*dy + ball.getLayoutY());
-					// If direction is upwards 
-					if(y2 < 0) y2 = -y2;
+				 */
+				if (dx > 0 && ball.getLayoutX() >= 200 && ball.getLayoutX() <= (200 + 5 * dx)) {
+					// Vector function to check where ball is going WITHOUT checking boundaries
+					// touched
+					int y2 = (int) ((370 - ball.getLayoutX()) / dx * dy + ball.getLayoutY());
+					// If direction is upwards
+					if (y2 < 0)
+						y2 = -y2;
 					// If odd amount of boundaries touched
-					if(y2/400%2 == 1) y2 = 400-y2%400;
-			
-					// Move player 2 to location 
-					y2 = y2-Player.radiusY/2;
-					
+					if (y2 / 400 % 2 == 1)
+						y2 = 400 - y2 % 400;
+
+					// Move player 2 to location
+					y2 = y2 - Player.radiusY / 2;
+
 					// Check if corresponding y2s
-					if(previousY2 != y2) {					
+					if (previousY2 != y2) {
 						// Save y2
-						previousY2 = y2; 
-						
+						previousY2 = y2;
+
 						// Create random variable
 						Random r = new Random();
 						int probability = r.nextInt(10);
-						
+
 						// Create thread to move player 2 with an 80% probability (8/10)
-						if(probability > 2) {
+						if (probability > 2) {
 							player2.setY(y2);
 						}
 //						(new Player2MovementThread(y2, player2)).start();
@@ -215,8 +246,10 @@ public class Game extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		setUp(primaryStage);
-		startGame();
+		// display menue
+		// setUp(primaryStage);
+		// startGame();
+		displayMenue(primaryStage);
 
 	}
 }
