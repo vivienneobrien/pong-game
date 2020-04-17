@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Random;
 
 import javafx.animation.KeyFrame;
@@ -38,6 +41,7 @@ public class Game extends Application {
 	private int previousY2 = -1;
 	public int gameType = 0;
 	private String ipToConnectTo;
+	public Socket socket; 
 
 	public static void main(String[] args) {
 		launch(args);
@@ -79,6 +83,7 @@ public class Game extends Application {
 		Button multiPlayer = new Button("multiplayer");
 		Button singlePlayer = new Button("singleplayer");
 		TextField IPAddress = new TextField();
+		
 		singlePlayer.setLayoutX(200);
 		singlePlayer.setLayoutY(200);
 		multiPlayer.setLayoutX(100);
@@ -86,7 +91,7 @@ public class Game extends Application {
 		
 		IPAddress.setLayoutX(100);
 		IPAddress.setLayoutY(300);
-
+		
 		singlePlayer.setOnAction(value -> {
 			System.out.println("Single Player");
 
@@ -99,6 +104,26 @@ public class Game extends Application {
 			ipToConnectTo = IPAddress.getText();			
 			System.out.println(ipToConnectTo);
 			
+			// Create server
+			if(ipToConnectTo.equals("")) {
+				try {
+					ServerSocket ss = new ServerSocket(10101);
+					socket = ss.accept();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.exit(0);
+				}
+			} else { 
+			// Join server 
+				try {
+					socket = new Socket(ipToConnectTo, 10101);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.exit(0);
+				}
+			}
 			
 			
 			System.out.println("Multi-Player");
