@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -35,6 +36,8 @@ public class Game extends Application {
 	public Text stopPlayer1;
 	public Text stopPlayer2;
 	private int previousY2 = -1;
+	public int gameType = 0;
+	private String ipToConnectTo;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -75,24 +78,36 @@ public class Game extends Application {
 		root = new Group();
 		Button multiPlayer = new Button("multiplayer");
 		Button singlePlayer = new Button("singleplayer");
+		TextField IPAddress = new TextField();
 		singlePlayer.setLayoutX(200);
 		singlePlayer.setLayoutY(200);
 		multiPlayer.setLayoutX(100);
 		multiPlayer.setLayoutY(200);
+		
+		IPAddress.setLayoutX(100);
+		IPAddress.setLayoutY(300);
 
 		singlePlayer.setOnAction(value -> {
 			System.out.println("Single Player");
-			 setUp(primaryStage);
-			 startGame();
-		});
-		
-		multiPlayer.setOnAction(value -> {
-			System.out.println("Multi-Player");
-			 setUp(primaryStage);
-			 startGame();
+
+			gameType = 1;
+			setUp(primaryStage);
+			startGame();
 		});
 
-		root.getChildren().addAll(multiPlayer, singlePlayer);
+		multiPlayer.setOnAction(value -> {
+			ipToConnectTo = IPAddress.getText();			
+			System.out.println(ipToConnectTo);
+			
+			
+			
+			System.out.println("Multi-Player");
+			gameType = 2;
+			setUp(primaryStage);
+			startGame();
+		});
+
+		root.getChildren().addAll(multiPlayer, singlePlayer, IPAddress);
 		scene = new Scene(root, 400, 400);
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -201,37 +216,41 @@ public class Game extends Application {
 				}
 
 				/*
-				 * Check where ball is going for player 2
+				 * Check where ball is going for player 2 - Ai
 				 */
-				if (dx > 0 && ball.getLayoutX() >= 200 && ball.getLayoutX() <= (200 + 5 * dx)) {
-					// Vector function to check where ball is going WITHOUT checking boundaries
-					// touched
-					int y2 = (int) ((370 - ball.getLayoutX()) / dx * dy + ball.getLayoutY());
-					// If direction is upwards
-					if (y2 < 0)
-						y2 = -y2;
-					// If odd amount of boundaries touched
-					if (y2 / 400 % 2 == 1)
-						y2 = 400 - y2 % 400;
+				if (gameType == 1) {
+					if (dx > 0 && ball.getLayoutX() >= 200 && ball.getLayoutX() <= (200 + 5 * dx)) {
+						// Vector function to check where ball is going WITHOUT checking boundaries
+						// touched
+						int y2 = (int) ((370 - ball.getLayoutX()) / dx * dy + ball.getLayoutY());
+						// If direction is upwards
+						if (y2 < 0)
+							y2 = -y2;
+						// If odd amount of boundaries touched
+						if (y2 / 400 % 2 == 1)
+							y2 = 400 - y2 % 400;
 
-					// Move player 2 to location
-					y2 = y2 - Player.radiusY / 2;
+						// Move player 2 to location
+						y2 = y2 - Player.radiusY / 2;
 
-					// Check if corresponding y2s
-					if (previousY2 != y2) {
-						// Save y2
-						previousY2 = y2;
+						// Check if corresponding y2s
+						if (previousY2 != y2) {
+							// Save y2
+							previousY2 = y2;
 
-						// Create random variable
-						Random r = new Random();
-						int probability = r.nextInt(10);
+							// Create random variable
+							Random r = new Random();
+							int probability = r.nextInt(10);
 
-						// Create thread to move player 2 with an 80% probability (8/10)
-						if (probability > 2) {
-							player2.setY(y2);
-						}
+							// Create thread to move player 2 with an 80% probability (8/10)
+							if (probability > 2) {
+								player2.setY(y2);
+							}
 //						(new Player2MovementThread(y2, player2)).start();
+						}
 					}
+				} else if (gameType == 2) {
+					// TODO: multiplayer & sockets
 				}
 			}
 		}));
