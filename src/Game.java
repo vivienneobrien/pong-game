@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -189,8 +191,14 @@ public class Game extends Application {
 						// Save y2
 						previousY2 = y2; 
 						
-						// Create thread to move player 2
-						player2.setY(y2);
+						// Create random variable
+						Random r = new Random();
+						int probability = r.nextInt(10);
+						
+						// Create thread to move player 2 with an 80% probability (8/10)
+						if(probability > 2) {
+							player2.setY(y2);
+						}
 //						(new Player2MovementThread(y2, player2)).start();
 					}
 				}
